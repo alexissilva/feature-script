@@ -3,8 +3,23 @@ import re
 from fs_node import FSNode
 from constants import *
 
+def check_directory(base_path: str, node: FSNode, prefix: str) -> bool:
+    if node.is_file or node.optional:
+        return True
 
-def create_file_or_directory(base_path: str, node: FSNode, prefix: str, module_code_path: str):
+    path = _get_node_path(base_path, node, prefix)
+    if not os.path.exists(path):
+        return False
+    
+    for sub_node in node.sub_nodes:
+        if not check_directory(path, sub_node, prefix):
+            return False
+            
+    return True
+
+
+
+def create_file_or_directory(base_path: str, node: FSNode, prefix: str, module_code_path: str, depth: int = 0):
     """
     Creates a file or directory based on the provided FSNode information.
 
@@ -15,27 +30,31 @@ def create_file_or_directory(base_path: str, node: FSNode, prefix: str, module_c
         module_code_path: The path to the module code directory. (str)
     """
 
-    path = os.path.join(
+    path = _get_node_path(base_path, node, prefix)
+
+    try:
+        if node.is_file:
+            _create_file(path, module_code_path, node.template_file, prefix, depth)
+        else:
+            _create_directory(path, depth)
+            for sub_node in node.sub_nodes:
+                create_file_or_directory(path, sub_node, prefix, module_code_path, depth+1)
+    except OSError as e:
+        print(f"Error creating file or directory: {e}")
+
+def _get_node_path(base_path: str, node: FSNode, prefix: str) -> str:
+    return os.path.join(
         base_path,
         node.name
             .replace(NAME_PREFIX, prefix.capitalize())
             .replace(NAME_PREFIX_LOWERCASE, prefix.lower())
     )
 
-    try:
-        if node.is_file:
-            _create_file(path, module_code_path, node.template_file, prefix)
-        else:
-            _create_directory(path)
-            for sub_node in node.sub_nodes:
-                create_file_or_directory(path, sub_node, prefix, module_code_path)
-    except OSError as e:
-        print(f"Error creating file or directory: {e}")
 
-
-def _create_file(file_path: str, module_code_path: str, template_file: str = None, prefix: str = None) -> bool:
+def _create_file(file_path: str, module_code_path: str, template_file: str = None, prefix: str = None, depth: int = 0) -> bool:
     """Creates a file at the given path using a template."""
 
+    identation = _get_identation(depth)
     file_name = file_path.split("/")[-1]
     if not os.path.exists(file_path):
         try:
@@ -44,17 +63,17 @@ def _create_file(file_path: str, module_code_path: str, template_file: str = Non
                     try:
                         _add_content_from_template(file, template_file, file_path, module_code_path, prefix)
                     except FileNotFoundError:
-                        print(f"Template file not found: {template_file}. Creating an empty file instead.")
+                        print(f"{identation}Template file not found: {template_file}. Creating an empty file instead.")
                         file.write("")
                 else:
                     file.write("")  # Create an empty file
-            print(f"File created: {file_name}")
+            print(f"{identation}{file_name}")
             return True
         except IOError as e:
-            print(f"Failed to create file: {file_name}. Error: {e}")
+            print(f"{identation}Failed to create file: {file_name}. Error: {e}")
             return False
     else:
-        print(f"File already exists: {file_name}")
+        print(f"{identation}{file_name} (file already exists)")
         return False
 
 
@@ -66,23 +85,22 @@ def _add_content_from_template(file, template_file: str, file_path: str, module_
         content = content.replace(PACKAGE_NAME_KEYWORD, package_name)
     file.write(content)
 
-def _create_directory(path: str) -> bool:
+def _create_directory(path: str, depth: int = 0) -> bool:
     """Creates a directory at the specified path."""
 
+    identation = _get_identation(depth)
     directory_name = path.split("/")[-1]
     if not os.path.exists(path):
         os.makedirs(path)
-        print(f"Directory created: {directory_name}")
+        print(f"{identation}{directory_name}")
         return True
     else:
-        print(f"Directory already exists: {directory_name}")
+        print(f"{identation}{directory_name} (directory already exists)")
         return False
 
 
 def _replace_case_insensitive(text: str, old: str, new: str) -> str:
-    """
-    Replace the text keeping the original case.
-    """
+    """Replace the text keeping the original case."""
 
     def replace(match):
         matched_text = match.group()
@@ -104,3 +122,10 @@ def _path_to_package(path: str, project_root: str) -> str:
 
     relative_path = os.path.relpath(path, project_root)
     return relative_path.replace(os.sep, '.')
+
+
+def _get_identation(depth: int) -> str:
+    identation = ""
+    for i in range(depth):
+        identation += "  "
+    return identation

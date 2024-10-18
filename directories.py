@@ -35,7 +35,8 @@ _presentation_directory = FSNode(
                 FSNode(name=f"{NAME_PREFIX}Contract.kt", is_file=True),
                 FSNode(name=f"{NAME_PREFIX}Processor.kt", is_file=True),
                 FSNode(name=f"{NAME_PREFIX}Reducer.kt", is_file=True)
-            ]
+            ],
+            optional=True
         )
     ]
 )

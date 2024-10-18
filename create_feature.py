@@ -14,7 +14,9 @@ def create_feature(feature_name: str):
     Creates a new feature within the specified package.
     """
 
-    print(f"Creating feature: {feature_name} in: {absolute_package_path}\n")
+    print(f"Creating feature: {feature_name}...")
+    print(f"Path: {absolute_package_path}\n")
+    print(f"Directories and files created:")
     create_file_or_directory(absolute_package_path, feature_directory, feature_name, module_code_path)
 
 

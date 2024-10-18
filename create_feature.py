@@ -11,9 +11,8 @@ absolute_package_path = os.path.join(module_code_path, PACKAGE_PATH)
 
 def create_feature(feature_name: str):
     """
-    Creates a new feature within the specified package.
+    Creates a new feature directory structure and files based on the provided feature name.
     """
-
     print(f"Creating feature: {feature_name}...")
     print(f"Path: {absolute_package_path}\n")
     print(f"Directories and files created:")

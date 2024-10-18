@@ -11,9 +11,8 @@ absolute_package_path = os.path.join(module_code_path, PACKAGE_PATH)
 
 def create_screen(feature_path: str, screen_name: str):
     """
-    Creates a new screen within the specified feature.
+    Creates a new screen directory structure and files based on the provided screen name and feature path.
     """
-
     absolute_feature_path = os.path.join(absolute_package_path, feature_path)
     print(f"Creating screen: {screen_name}...")
     print(f"Path: {absolute_feature_path}\n")

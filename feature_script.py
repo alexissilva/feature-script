@@ -4,6 +4,19 @@ from fs_node import FSNode
 from constants import *
 
 def check_directory(base_path: str, node: FSNode, prefix: str) -> bool:
+    """
+    Verifies the existence of directories and files in the file system recursively based on the given FSNode structure.
+
+    Args:
+        base_path (str): The base directory path from which to start checking.
+        node (FSNode): The current node (directory or file) to check in the file system.
+        prefix (str): A prefix used to construct the path for each node.
+
+    Returns:
+        bool: `True` if all directories and files in the `FSNode` structure exist, 
+              or if the node is a file or an optional directory. `False` otherwise.
+    """
+
     if node.is_file or node.optional:
         return True
 
@@ -42,6 +55,7 @@ def create_file_or_directory(base_path: str, node: FSNode, prefix: str, module_c
     except OSError as e:
         print(f"Error creating file or directory: {e}")
 
+
 def _get_node_path(base_path: str, node: FSNode, prefix: str) -> str:
     return os.path.join(
         base_path,
@@ -50,10 +64,7 @@ def _get_node_path(base_path: str, node: FSNode, prefix: str) -> str:
             .replace(NAME_PREFIX_LOWERCASE, prefix.lower())
     )
 
-
 def _create_file(file_path: str, module_code_path: str, template_file: str = None, prefix: str = None, depth: int = 0) -> bool:
-    """Creates a file at the given path using a template."""
-
     identation = _get_identation(depth)
     file_name = file_path.split("/")[-1]
     if not os.path.exists(file_path):
@@ -86,8 +97,6 @@ def _add_content_from_template(file, template_file: str, file_path: str, module_
     file.write(content)
 
 def _create_directory(path: str, depth: int = 0) -> bool:
-    """Creates a directory at the specified path."""
-
     identation = _get_identation(depth)
     directory_name = path.split("/")[-1]
     if not os.path.exists(path):
@@ -100,8 +109,6 @@ def _create_directory(path: str, depth: int = 0) -> bool:
 
 
 def _replace_case_insensitive(text: str, old: str, new: str) -> str:
-    """Replace the text keeping the original case."""
-
     def replace(match):
         matched_text = match.group()
         if matched_text.islower():
@@ -118,8 +125,6 @@ def _replace_case_insensitive(text: str, old: str, new: str) -> str:
 
 
 def _path_to_package(path: str, project_root: str) -> str:
-    """Convert a file path to a package string."""
-
     relative_path = os.path.relpath(path, project_root)
     return relative_path.replace(os.sep, '.')
 

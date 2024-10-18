@@ -5,22 +5,38 @@ from constants import *
 
 
 def create_file_or_directory(base_path: str, node: FSNode, prefix: str, module_code_path: str):
+    """
+    Creates a file or directory based on the provided FSNode information.
+
+    Args:
+        base_path: The base path where the file or directory will be created. (str)
+        node: An FSNode object representing the file or directory structure. (FSNode)
+        prefix: A prefix to be applied to the node name. (str)
+        module_code_path: The path to the module code directory. (str)
+    """
+
     path = os.path.join(
-        base_path, 
+        base_path,
         node.name
             .replace(NAME_PREFIX, prefix.capitalize())
             .replace(NAME_PREFIX_LOWERCASE, prefix.lower())
     )
-    
-    if node.is_file:
-        _create_file(path, module_code_path, node.template_file, prefix)
-    else:
-        _create_directory(path)
-        for sub_node in node.sub_nodes:
-            create_file_or_directory(path, sub_node, prefix, module_code_path)
+
+    try:
+        if node.is_file:
+            _create_file(path, module_code_path, node.template_file, prefix)
+        else:
+            _create_directory(path)
+            for sub_node in node.sub_nodes:
+                create_file_or_directory(path, sub_node, prefix, module_code_path)
+    except OSError as e:
+        print(f"Error creating file or directory: {e}")
+
 
 def _create_file(file_path: str, module_code_path: str, template_file: str = None, prefix: str = None) -> bool:
     """Creates a file at the given path using a template."""
+
+    file_simple_path = os.path.relpath(file_path, module_code_path)
     if not os.path.exists(file_path):
         try:
             with open(file_path, 'w') as file:
@@ -37,17 +53,19 @@ def _create_file(file_path: str, module_code_path: str, template_file: str = Non
                         file.write("")  # Fallback to creating an empty file
                 else:
                     file.write("")  # Create an empty file
-            print(f"File created: {file_path}")
+            print(f"File created: {file_simple_path}")
             return True
         except IOError as e:
-            print(f"Failed to create file: {file_path}. Error: {e}")
+            print(f"Failed to create file: {file_simple_path}. Error: {e}")
             return False
     else:
-        print(f"File already exists: {file_path}")
+        print(f"File already exists: {file_simple_path}")
         return False
+
 
 def _create_directory(path: str) -> bool:
     """Creates a directory at the specified path."""
+
     if not os.path.exists(path):
         os.makedirs(path)
         print(f"Directory created: {path}")
@@ -56,10 +74,12 @@ def _create_directory(path: str) -> bool:
         print(f"Directory already exists: {path}")
         return False
 
-def _replace_case_insensitive(text, old, new):
+
+def _replace_case_insensitive(text: str, old: str, new: str) -> str:
     """
     Replace the text keeping the original case.
     """
+
     def replace(match):
         matched_text = match.group()
         if matched_text.islower():
@@ -74,7 +94,9 @@ def _replace_case_insensitive(text, old, new):
     pattern = re.escape(old)
     return re.sub(pattern, replace, text, flags=re.IGNORECASE)
 
+
 def _path_to_package(path: str, project_root: str) -> str:
     """Convert a file path to a package string."""
+
     relative_path = os.path.relpath(path, project_root)
     return relative_path.replace(os.sep, '.')

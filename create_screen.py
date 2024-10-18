@@ -4,15 +4,22 @@ from feature_script import create_file_or_directory
 from constants import *
 from directories import screen_directories
 
+
 module_code_path = os.path.join(PROJECT_ROOT_PATH, MODULE, CODE_PATH)
 absolute_package_path = os.path.join(module_code_path, PACKAGE_PATH)
 
+
 def create_screen(feature_path: str, screen_name: str):
+    """
+    Creates a new screen within the specified feature.
+    """
+
     absolute_feature_path = os.path.join(absolute_package_path, feature_path)
     print(f"Creating screen: {screen_name} in: {absolute_feature_path}\n")
-    
+
     for screen_dir in screen_directories:
         create_file_or_directory(absolute_feature_path, screen_dir, screen_name, module_code_path)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Create a new feature screen.')

@@ -50,7 +50,7 @@ feature_directory = FSNode(
         _data_directory,
         _di_directory,
         _presentation_directory,
-        _ui_directory, 
+        _ui_directory,
     ]
 )
 

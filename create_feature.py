@@ -8,9 +8,15 @@ from directories import feature_directory
 module_code_path = os.path.join(PROJECT_ROOT_PATH, MODULE, CODE_PATH)
 absolute_package_path = os.path.join(module_code_path, PACKAGE_PATH)
 
+
 def create_feature(feature_name: str):
+    """
+    Creates a new feature within the specified package.
+    """
+
     print(f"Creating feature: {feature_name} in: {absolute_package_path}\n")
     create_file_or_directory(absolute_package_path, feature_directory, feature_name, module_code_path)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Create a new feature.')

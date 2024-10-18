@@ -1,20 +1,22 @@
 import argparse
 import os
 from feature_script import create_file_or_directory
+from constants import *
+from directories import feature_directory
 
 
-base_code_path = "/Users/alexissilva/Documents/Mach/maas/qrBip/src/main/java"
-
-script_path = os.path.dirname(os.path.abspath(__file__))
-feature_template_path = os.path.join(script_path, "templates/maas/prefix")
+module_code_path = os.path.join(PROJECT_ROOT_PATH, MODULE, CODE_PATH)
+absolute_package_path = os.path.join(module_code_path, PACKAGE_PATH)
 
 
 def create_feature(feature_name: str):
+    """
+    Creates a new feature directory structure and files based on the provided feature name.
+    """
     print(f"Creating feature: {feature_name}...")
+    print(f"Path: {absolute_package_path}\n")
     print(f"Directories and files created:")
-    
-    current_path = os.getcwd()
-    create_file_or_directory(current_path, feature_template_path, feature_name, base_code_path)
+    create_file_or_directory(absolute_package_path, feature_directory, feature_name, module_code_path)
 
 
 if __name__ == "__main__":

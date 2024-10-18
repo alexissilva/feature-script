@@ -1,17 +1,16 @@
 import os
 
-# Set up
-#PROJECT_ROOT_PATH = os.path.abspath("/Users/alexissilva/Documents/Mach/maas")
-#MODULE = "qrBip"
-#CODE_PATH = "src/main/java/" # It does not change
-#PACKAGE_PATH = "cl/bci/mach/product/qrbip"
-
-
+# Set up with your project paths
 PROJECT_ROOT_PATH = os.path.abspath("scriptProject")
 MODULE = ""
 CODE_PATH = "" # It does not change
 PACKAGE_PATH = "alexissilva"
 
+# qrBip config
+PROJECT_ROOT_PATH = os.path.abspath("/Users/alexissilva/Documents/Mach/maas")
+MODULE = "qrBip"
+CODE_PATH = "src/main/java/" # It does not change
+PACKAGE_PATH = "cl/bci/mach/product/qrbip"
 
 
 # Path relative to script 

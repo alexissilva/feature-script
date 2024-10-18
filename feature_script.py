@@ -36,42 +36,46 @@ def create_file_or_directory(base_path: str, node: FSNode, prefix: str, module_c
 def _create_file(file_path: str, module_code_path: str, template_file: str = None, prefix: str = None) -> bool:
     """Creates a file at the given path using a template."""
 
-    file_simple_path = os.path.relpath(file_path, module_code_path)
+    file_name = file_path.split("/")[-1]
     if not os.path.exists(file_path):
         try:
             with open(file_path, 'w') as file:
                 if template_file and prefix:
                     try:
-                        with open(os.path.join(TEMPLATE_DIRECTORY, template_file), 'r') as template:
-                            content = template.read()
-                            package_name = _path_to_package(os.path.dirname(file_path), module_code_path)
-                            content = _replace_case_insensitive(content, TEMPLATE_PREFIX, prefix)
-                            content = content.replace(PACKAGE_NAME_KEYWORD, package_name)
-                        file.write(content)
+                        _add_content_from_template(file, template_file, file_path, module_code_path, prefix)
                     except FileNotFoundError:
                         print(f"Template file not found: {template_file}. Creating an empty file instead.")
-                        file.write("")  # Fallback to creating an empty file
+                        file.write("")
                 else:
                     file.write("")  # Create an empty file
-            print(f"File created: {file_simple_path}")
+            print(f"File created: {file_name}")
             return True
         except IOError as e:
-            print(f"Failed to create file: {file_simple_path}. Error: {e}")
+            print(f"Failed to create file: {file_name}. Error: {e}")
             return False
     else:
-        print(f"File already exists: {file_simple_path}")
+        print(f"File already exists: {file_name}")
         return False
 
+
+def _add_content_from_template(file, template_file: str, file_path: str, module_code_path: str, prefix: str):
+    with open(os.path.join(TEMPLATE_DIRECTORY, template_file), 'r') as template:
+        content = template.read()
+        package_name = _path_to_package(os.path.dirname(file_path), module_code_path)
+        content = _replace_case_insensitive(content, TEMPLATE_PREFIX, prefix)
+        content = content.replace(PACKAGE_NAME_KEYWORD, package_name)
+    file.write(content)
 
 def _create_directory(path: str) -> bool:
     """Creates a directory at the specified path."""
 
+    directory_name = path.split("/")[-1]
     if not os.path.exists(path):
         os.makedirs(path)
-        print(f"Directory created: {path}")
+        print(f"Directory created: {directory_name}")
         return True
     else:
-        print(f"Directory already exists: {path}")
+        print(f"Directory already exists: {directory_name}")
         return False
 
 

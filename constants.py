@@ -1,9 +1,9 @@
 import os
 
 # Set up
-PROJECT_ROOT_PATH = os.path.abspath("..")
+PROJECT_ROOT_PATH = os.path.abspath("/Users/alexissilva/Documents/Mach/maas")
 MODULE = "qrBip"
-CODE_PATH = "src/main/java/"
+CODE_PATH = "src/main/java/" # It does not change
 PACKAGE_PATH = "cl/bci/mach/product/qrbip"
 
 

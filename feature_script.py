@@ -14,7 +14,7 @@ def create_file_or_directory(base_path: str, template_path: str, keywords: List[
     if file_or_dir_name in IGNORE_FILES:
         return
 
-    new_path = _get_path_with_prefix(base_path, file_or_dir_name, keywords)
+    new_path = _get_path_with_keywords(base_path, file_or_dir_name, keywords)
 
     if os.path.isfile(template_path):
         _create_file_from_template(new_path, template_path, keywords, root_code_path, depth)
@@ -26,7 +26,7 @@ def create_file_or_directory(base_path: str, template_path: str, keywords: List[
     
 
 
-def _get_path_with_prefix(base_path: str, file_name: str, keywords: List[KeywordScript]) -> str:
+def _get_path_with_keywords(base_path: str, file_name: str, keywords: List[KeywordScript]) -> str:
     name_with_keywords = replace_keywords(file_name, keywords)
     return os.path.join(base_path, name_with_keywords)
 

@@ -55,14 +55,18 @@ def _get_content_from_template(file_path: str, template_file_path: str, keywords
         with open(template_file_path, 'r') as template:
             content = template.read()
             content = replace_keywords(content, keywords)
-            package_pattern = r'^\s*package .*$'
-            package_name = _path_to_package(file_path, root_code_path)
-            content = re.sub(package_pattern, f"package {package_name}", content, flags=re.MULTILINE)
+            content = _replace_package(content, file_path, root_code_path)
     except FileNotFoundError:
         print_indented(f"Template file not found: {template_file_path}.", depth)
         content = ""
     
     return content
+
+
+def _replace_package(text: str, file_path: str, root_code_path: str) -> str:
+        package_pattern = r'^\s*package .*$'
+        package_name = _path_to_package(file_path, root_code_path)
+        return re.sub(package_pattern, f"package {package_name}", text, flags=re.MULTILINE)
 
 
 def _path_to_package(path: str, base_path: str) -> str:

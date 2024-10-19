@@ -1,4 +1,6 @@
 import os
+import re
+
 
 def is_subpath(path_a: str, path_b: str) -> bool:
     abs_path_a = os.path.abspath(path_a)
@@ -17,3 +19,31 @@ def is_destination_path_valid(root_code_path: str, current_path: str) -> bool:
 
 def get_root_code_path(root_path: str, module: str, code_path: str) -> str:
     return os.path.join(root_path, module, code_path)
+
+
+def print_indented(message: str, depth: int = 0):
+    identation = get_indentation(depth)
+    print(f"{identation}{message}")
+
+
+def get_indentation(depth: int) -> str:
+    indentation = ""
+    for _ in range(depth):
+        indentation += "    "
+    return indentation
+
+
+def replace_case_insensitive(text: str, old: str, new: str) -> str:
+    def replace(match):
+        matched_text = match.group()
+        if matched_text.islower():
+            return new.lower()
+        elif matched_text.isupper():
+            return new.upper()
+        elif matched_text[0].isupper():
+            return new.capitalize()
+        else:
+            return new
+
+    pattern = re.escape(old)
+    return re.sub(pattern, replace, text, flags=re.IGNORECASE)

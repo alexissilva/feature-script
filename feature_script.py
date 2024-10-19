@@ -1,8 +1,7 @@
 import os
 import re
-from utils import is_subpath
-
-PREFIX_KEYWORD = "Prefix"
+from utils import is_subpath, print_indented, replace_case_insensitive
+from config import PREFIX_KEYWORD
 
 def create_file_or_directory(base_path: str, template_path: str, prefix: str, root_code_path: str, depth: int = 0):
     if not os.path.exists(template_path):
@@ -13,9 +12,9 @@ def create_file_or_directory(base_path: str, template_path: str, prefix: str, ro
     new_path = _get_path_with_prefix(base_path, file_or_dir_name, prefix)
 
     if os.path.isfile(template_path):
-        create_file_from_template(new_path, template_path, prefix, root_code_path, depth)
+        _create_file_from_template(new_path, template_path, prefix, root_code_path, depth)
     else:
-        create_directory(new_path, depth)
+        _create_directory(new_path, depth)
         for sub_path in os.listdir(template_path):
             new_template = os.path.join(template_path, sub_path)
             create_file_or_directory(new_path, new_template, prefix, root_code_path, depth+1)
@@ -23,11 +22,11 @@ def create_file_or_directory(base_path: str, template_path: str, prefix: str, ro
 
 
 def _get_path_with_prefix(base_path: str, file_name: str, prefix: str) -> str:
-    name_with_prefix = _replace_case_insensitive(file_name, PREFIX_KEYWORD, prefix)
+    name_with_prefix = replace_case_insensitive(file_name, PREFIX_KEYWORD, prefix)
 
     return os.path.join(base_path, name_with_prefix)
 
-def create_file_from_template(file_path: str, template_path: str, prefix: str, root_code_path: str, depth: int = 0) -> bool:
+def _create_file_from_template(file_path: str, template_path: str, prefix: str, root_code_path: str, depth: int = 0) -> bool:
     file_name = os.path.basename(file_path)
     if not os.path.exists(file_path):
         try:
@@ -51,7 +50,7 @@ def _get_content_from_template(file_path: str, template_file_path: str, prefix: 
     try:
         with open(template_file_path, 'r') as template:
             content = template.read()
-            content = _replace_case_insensitive(content, PREFIX_KEYWORD, prefix)
+            content = replace_case_insensitive(content, PREFIX_KEYWORD, prefix)
             package_pattern = r'^\s*package .*$'
             package_name = _path_to_package(file_path, root_code_path)
             content = re.sub(package_pattern, f"package {package_name}", content, flags=re.MULTILINE)
@@ -62,25 +61,9 @@ def _get_content_from_template(file_path: str, template_file_path: str, prefix: 
     return content
 
 
-def _replace_case_insensitive(text: str, old: str, new: str) -> str:
-    def replace(match):
-        matched_text = match.group()
-        if matched_text.islower():
-            return new.lower()
-        elif matched_text.isupper():
-            return new.upper()
-        elif matched_text[0].isupper():
-            return new.capitalize()
-        else:
-            return new
-
-    pattern = re.escape(old)
-    return re.sub(pattern, replace, text, flags=re.IGNORECASE)
-
-
 def _path_to_package(path: str, base_path: str) -> str:
     if not is_subpath(base_path, path):
-        return
+        return ""
 
     if os.path.isfile(path):
         path = os.path.dirname(path)
@@ -89,7 +72,7 @@ def _path_to_package(path: str, base_path: str) -> str:
 
 
     
-def create_directory(path: str, depth: int = 0) -> bool:
+def _create_directory(path: str, depth: int = 0) -> bool:
     directory_name = os.path.basename(path)
     if not os.path.exists(path):
         os.makedirs(path)
@@ -99,15 +82,3 @@ def create_directory(path: str, depth: int = 0) -> bool:
         print_indented(f"{directory_name}/ (it already existed)", depth)
         return False
 
-
-
-def print_indented(message: str, depth: int = 0):
-    identation = _get_indentation(depth)
-    print(f"{identation}{message}")
-
-
-def _get_indentation(depth: int) -> str:
-    indentation = ""
-    for _ in range(depth):
-        indentation += "    "
-    return indentation

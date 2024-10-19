@@ -1,6 +1,5 @@
 import os
 
-
 ROOT_PROJECT_PATH = "/Users/alexissilva/Documents/Mach/maas"  # Root path of the project
 MODULE = "qrBip"  # Name of the specific module
 CODE_PATH = "src/main/java"  # Source code path, remains unchanged
@@ -9,8 +8,9 @@ CODE_PATH = "src/main/java"  # Source code path, remains unchanged
 
 
 
-
 SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
 FEATURE_TEMPLATE_PATH = os.path.join(SCRIPT_PATH, "templates/maas/prefix")
 PRESENTATION_TEMPLATE_PATH = os.path.join(FEATURE_TEMPLATE_PATH, "presentation")
 UI_TEMPLATE_PATH = os.path.join(FEATURE_TEMPLATE_PATH, "ui")
+PREFIX_KEYWORD = "Prefix"
+

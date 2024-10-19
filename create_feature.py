@@ -2,8 +2,7 @@ import argparse
 import os
 from feature_script import create_file_or_directory
 from config import *
-from utils import is_destination_path_valid, get_root_code_path
-
+from utils import *
 
 def create_feature(feature_name: str):
     destination_path = os.getcwd()

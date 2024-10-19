@@ -20,10 +20,6 @@ def is_destination_path_valid(root_code_path: str, destionation_path: str) -> bo
     return True
 
 
-def get_root_code_path(root_path: str, module: str, code_path: str) -> str:
-    return os.path.join(root_path, module, code_path)
-
-
 def print_indented(message: str, depth: int = 0):
     identation = get_indentation(depth)
     print(f"{identation}{message}")
@@ -56,3 +52,10 @@ def replace_keywords(text: str, keywords: List[KeywordScript]) -> str:
     for keyword in keywords:
         text = replace_case_insensitive(text, keyword.keyword, keyword.replacement)
     return text
+
+
+def get_root_code_path(destination_path: str, source_code_path_segment: str) -> str:
+    pos = destination_path.find(source_code_path_segment)
+    if pos != -1:
+        return destination_path[:pos + len(source_code_path_segment)]
+    return None

@@ -1,11 +1,11 @@
-package cl.bci.mach.product.qrbip.prefix.presentation.prefix
+package cl.bci.mach.product.qrbip.feature.presentation.prefix
 
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixResult.ErrorResult
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixResult.LoadingResult
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixResult.SuccessResult
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixUiState.ErrorUiState
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixUiState.LoadingUiState
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixUiState.SuccessUiState
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixResult.ErrorResult
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixResult.LoadingResult
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixResult.SuccessResult
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixUiState.ErrorUiState
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixUiState.LoadingUiState
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixUiState.SuccessUiState
 import cl.bci.sismo.mach.core.mvi.MviReducer
 import javax.inject.Inject
 

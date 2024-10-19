@@ -1,14 +1,14 @@
-package cl.bci.mach.product.qrbip.prefix.presentation
+package cl.bci.mach.product.qrbip.feature.presentation
 
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixReducer
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixReducer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixEffect
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixProcessor
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixResult
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixUiState
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixUiState.DefaultUiState
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixUserIntent
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixEffect
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixProcessor
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixResult
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixUiState
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixUiState.DefaultUiState
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixUserIntent
 import cl.bci.sismo.mach.core.mvi.flow.MviPresentation
 import cl.bci.sismo.mach.core.mvi.flow.MviPresentationEffect
 import kotlinx.coroutines.flow.Flow

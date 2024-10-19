@@ -1,5 +1,8 @@
 import os
 import re
+from typing import List
+from keyword_script import KeywordScript
+
 
 
 def is_subpath(path_a: str, path_b: str) -> bool:
@@ -47,3 +50,9 @@ def replace_case_insensitive(text: str, old: str, new: str) -> str:
 
     pattern = re.escape(old)
     return re.sub(pattern, replace, text, flags=re.IGNORECASE)
+
+
+def replace_keywords(text: str, keywords: List[KeywordScript]) -> str:
+    for keyword in keywords:
+        text = replace_case_insensitive(text, keyword.keyword, keyword.replacement)
+    return text

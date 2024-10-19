@@ -1,10 +1,10 @@
-package cl.bci.mach.product.qrbip.prefix.presentation.prefix
+package cl.bci.mach.product.qrbip.feature.presentation.prefix
 
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixEffect.ShowToastEffect
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixResult.ErrorResult
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixResult.LoadingResult
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixResult.SuccessResult
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixUserIntent.ClickIntent
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixEffect.ShowToastEffect
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixResult.ErrorResult
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixResult.LoadingResult
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixResult.SuccessResult
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixUserIntent.ClickIntent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

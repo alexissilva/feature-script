@@ -1,4 +1,4 @@
-package cl.bci.mach.product.qrbip.prefix.ui
+package cl.bci.mach.product.qrbip.feature.ui
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
@@ -20,9 +20,9 @@ import cl.bci.mach.libraries.design.ui.atom.SpacerS
 import cl.bci.mach.libraries.design.ui.atom.Text
 import cl.bci.mach.libraries.design.ui.molecule.button.Button
 import cl.bci.mach.libraries.design.ui.theme.M2BTheme
-import cl.bci.mach.product.qrbip.prefix.presentation.PrefixViewModel
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixEffect.ShowToastEffect
-import cl.bci.mach.product.qrbip.prefix.presentation.prefix.PrefixUiState
+import cl.bci.mach.product.qrbip.feature.presentation.PrefixViewModel
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixEffect.ShowToastEffect
+import cl.bci.mach.product.qrbip.feature.presentation.prefix.PrefixUiState
 import kotlinx.coroutines.launch
 
 @Composable

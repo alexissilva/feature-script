@@ -1,4 +1,4 @@
-package cl.bci.mach.product.qrbip.prefix.presentation.prefix
+package cl.bci.mach.product.qrbip.feature.presentation.prefix
 
 import cl.bci.sismo.mach.core.mvi.events.MviEffect
 import cl.bci.sismo.mach.core.mvi.events.MviResult

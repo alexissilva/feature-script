@@ -8,10 +8,10 @@ def is_subpath(path_a: str, path_b: str) -> bool:
     return os.path.commonpath([abs_path_a, abs_path_b]) == abs_path_a
 
 
-def is_destination_path_valid(root_code_path: str, current_path: str) -> bool:
-    if not is_subpath(root_code_path, current_path):
+def is_destination_path_valid(root_code_path: str, destionation_path: str) -> bool:
+    if not is_subpath(root_code_path, destionation_path):
         print("Error: The destination path is not a subpath of the root code path.")
-        print(f"    Destination path: {current_path}")
+        print(f"    Destination path: {destionation_path}")
         print(f"    Root code path: {root_code_path}")
         return False
     return True

@@ -9,8 +9,11 @@ CODE_PATH = "src/main/java"  # Source code path, remains unchanged
 
 
 SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
-FEATURE_TEMPLATE_PATH = os.path.join(SCRIPT_PATH, "templates/maas/prefix")
-PRESENTATION_TEMPLATE_PATH = os.path.join(FEATURE_TEMPLATE_PATH, "presentation")
-UI_TEMPLATE_PATH = os.path.join(FEATURE_TEMPLATE_PATH, "ui")
+ROOT_TEMPLATE_PATH = os.path.join(SCRIPT_PATH, "templates/maas")
+FEATURE_TEMPLATE_PATH = os.path.join(ROOT_TEMPLATE_PATH, "feature/prefix")
+SCREEN_TEMPLATE_PATH = os.path.join(ROOT_TEMPLATE_PATH, "screen")
 PREFIX_KEYWORD = "Prefix"
 
+IGNORE_FILES = {
+    ".DS_Store"
+}

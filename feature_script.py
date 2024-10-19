@@ -1,7 +1,7 @@
 import os
 import re
 from utils import is_subpath, print_indented, replace_case_insensitive
-from config import PREFIX_KEYWORD
+from config import PREFIX_KEYWORD, IGNORE_FILES
 
 def create_file_or_directory(base_path: str, template_path: str, prefix: str, root_code_path: str, depth: int = 0):
     if not os.path.exists(template_path):
@@ -9,6 +9,9 @@ def create_file_or_directory(base_path: str, template_path: str, prefix: str, ro
         return     
     
     file_or_dir_name = os.path.basename(template_path)
+    if file_or_dir_name in IGNORE_FILES:
+        return
+
     new_path = _get_path_with_prefix(base_path, file_or_dir_name, prefix)
 
     if os.path.isfile(template_path):

@@ -1,9 +1,27 @@
 import os
 import re
 from typing import List
-from utils import is_subpath, print_indented, replace_keywords
+from utils import is_subpath, print_indented, replace_keywords, get_test_path_from_source_path
 from config import IGNORE_FILES
 from keyword_script import KeywordScript
+
+
+def create_component(destination: str, template_path: str, keywords: list, root_path: str, name: str, component_type: str, test_template_path: str = None):
+    print(f"Creating {component_type} '{name}'...")
+    print("Creating directories and files:")
+    try:
+        create_file_or_directory(destination, template_path, keywords, root_path)
+        print(f"{component_type.capitalize()} '{name}' created successfully.")
+    except Exception as e:
+        print(f"An error occurred while creating {component_type.lower()}: {e}")
+
+
+    if test_template_path:
+        test_destination = get_test_path_from_source_path(destination)
+        test_root = get_test_path_from_source_path(root_path)
+        print()
+        create_component(test_destination, test_template_path, keywords, test_root, name, f"test of {component_type}")
+
 
 def create_file_or_directory(base_path: str, template_path: str, keywords: List[KeywordScript], root_code_path: str, depth: int = 0):
     if not os.path.exists(template_path):

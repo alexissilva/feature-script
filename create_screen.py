@@ -5,12 +5,8 @@ from config import *
 from utils import *
 
 def create_screen(screen_name: str, feature_name: str) -> None:
-    destination_path = os.path.join(os.getcwd(), feature_name)
-    root_code_path = get_source_path_until_chunk(destination_path, SOURCE_PATH_CHUNK)
-
-    if not is_destination_path_valid(root_code_path, destination_path):
-        return
-
+    destination_path = os.getcwd()
+    base_package = get_package_of_path(destination_path)
 
     keywords = [
         KeywordScript(PREFIX_KEYWORD, screen_name),
@@ -19,7 +15,7 @@ def create_screen(screen_name: str, feature_name: str) -> None:
 
     for sub_path in os.listdir(SCREEN_TEMPLATE_PATH):
         abs_sub_path = os.path.join(SCREEN_TEMPLATE_PATH, sub_path)
-        create_component(destination_path, abs_sub_path, keywords, root_code_path, screen_name, "{sub_path} of screen")
+        create_component(destination_path, abs_sub_path, keywords, base_package, screen_name, "{sub_path} of screen")
 
 
 if __name__ == "__main__":

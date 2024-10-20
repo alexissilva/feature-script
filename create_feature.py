@@ -6,15 +6,12 @@ from utils import *
 
 def create_feature(feature_name: str, with_tests: bool):
     destination_path = os.getcwd()
-    root_code_path = get_source_path_until_chunk(destination_path, SOURCE_PATH_CHUNK)
-
-    if not is_destination_path_valid(root_code_path, destination_path):
-        return
+    base_package = get_package_of_path(destination_path)
 
     keywords = [KeywordScript(PREFIX_KEYWORD, feature_name)]
     test_template_path = FEATURE_TEST_TEMPLATE_PATH if with_tests else None
 
-    create_component(destination_path, FEATURE_TEMPLATE_PATH, keywords, root_code_path, feature_name, "feature", test_template_path)
+    create_component(destination_path, FEATURE_TEMPLATE_PATH, keywords, base_package, feature_name, "feature", test_template_path)
 
 
 if __name__ == "__main__":

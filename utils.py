@@ -2,6 +2,7 @@ import os
 import re
 from typing import List
 from keyword_script import KeywordScript
+from config import SOURCE_PATH_CHUNK, TEST_PATH_CHUNK
 
 
 
@@ -54,17 +55,43 @@ def replace_keywords(text: str, keywords: List[KeywordScript]) -> str:
     return text
 
 
-def get_source_path_until_chunk(full_path: str, chunk: str) -> str:
+def get_path_until_chunk(full_path: str, chunk: str) -> str:
     pos = full_path.find(chunk)
     if pos != -1:
         return full_path[:pos + len(chunk)]
     return None
 
 
-from config import SOURCE_PATH_CHUNK, TEST_PATH_CHUNK
+def relative_path_to_package(path: str, base_path: str) -> str:
+    if not is_subpath(base_path, path):
+        return ""
 
-# Converts a source code path to a test path for Java/Kotlin projects.
-# Assumes typical 'src/main/java' and 'src/test/java' directory structure.
-# Behavior may vary for other languages with different conventions.
+    if os.path.isfile(path):
+        path = os.path.dirname(path)
+    relative_path = os.path.relpath(path, base_path)
+    return relative_path.replace(os.sep, '.')
+
+
+
+def get_package_of_path(path: str):
+    """
+    Retrieves the package for the current directory based on the given path.
+
+    Assumes a structure similar to Java and Kotlin, where source code is in 
+    'src/main/java'. It's crucial to consider the difference between the current 
+    directory and this base directory. Not sure if this will work well in other 
+    languages.
+    """
+    root_code_path = get_path_until_chunk(path, SOURCE_PATH_CHUNK)
+    return relative_path_to_package(path, root_code_path)
+
+
+
 def get_test_path_from_source_path(source_path: str) -> str:
+    """
+    Converts a source code path to a test path for Java/Kotlin projects.
+
+    Assumes a typical 'src/main/java' and 'src/test/java' directory structure.
+    Behavior may vary for other languages with different conventions.
+    """
     return source_path.replace(SOURCE_PATH_CHUNK, TEST_PATH_CHUNK)

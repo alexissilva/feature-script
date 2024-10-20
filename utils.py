@@ -5,20 +5,10 @@ from keyword_script import KeywordScript
 from config import SOURCE_PATH_CHUNK, TEST_PATH_CHUNK
 
 
-
 def is_subpath(path_a: str, path_b: str) -> bool:
     abs_path_a = os.path.abspath(path_a)
     abs_path_b = os.path.abspath(path_b)
     return os.path.commonpath([abs_path_a, abs_path_b]) == abs_path_a
-
-
-def is_destination_path_valid(root_code_path: str, destionation_path: str) -> bool:
-    if not is_subpath(root_code_path, destionation_path):
-        print("Error: The destination path is not a subpath of the root code path.")
-        print(f"    Destination path: {destionation_path}")
-        print(f"    Root code path: {root_code_path}")
-        return False
-    return True
 
 
 def print_indented(message: str, depth: int = 0):

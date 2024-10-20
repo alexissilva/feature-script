@@ -6,7 +6,7 @@ from utils import *
 
 def create_screen(screen_name: str, feature_name: str) -> None:
     destination_path = os.path.join(os.getcwd(), feature_name)
-    root_code_path = get_root_code_path(destination_path, SOURCE_CODE_PATH_SEGMENT)
+    root_code_path = get_source_path_until_chunk(destination_path, SOURCE_PATH_CHUNK)
 
     if not is_destination_path_valid(root_code_path, destination_path):
         return

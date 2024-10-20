@@ -54,8 +54,17 @@ def replace_keywords(text: str, keywords: List[KeywordScript]) -> str:
     return text
 
 
-def get_root_code_path(destination_path: str, source_code_path_segment: str) -> str:
-    pos = destination_path.find(source_code_path_segment)
+def get_source_path_until_chunk(full_path: str, chunk: str) -> str:
+    pos = full_path.find(chunk)
     if pos != -1:
-        return destination_path[:pos + len(source_code_path_segment)]
+        return full_path[:pos + len(chunk)]
     return None
+
+
+from config import SOURCE_PATH_CHUNK, TEST_PATH_CHUNK
+
+# Converts a source code path to a test path for Java/Kotlin projects.
+# Assumes typical 'src/main/java' and 'src/test/java' directory structure.
+# Behavior may vary for other languages with different conventions.
+def get_test_path_from_source_path(source_path: str) -> str:
+    return source_path.replace(SOURCE_PATH_CHUNK, TEST_PATH_CHUNK)

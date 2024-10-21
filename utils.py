@@ -85,3 +85,12 @@ def get_test_path_from_source_path(source_path: str) -> str:
     Behavior may vary for other languages with different conventions.
     """
     return source_path.replace(SOURCE_PATH_CHUNK, TEST_PATH_CHUNK)
+
+
+def read_lines(file_path: str) -> list:
+    with open(file_path, 'r') as file:
+        return file.readlines()
+
+def write_lines(file_path: str, lines: list):
+    with open(file_path, 'w') as file:
+        file.writelines(lines)
